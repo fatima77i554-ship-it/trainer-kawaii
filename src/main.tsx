@@ -14,11 +14,13 @@ if (palette) document.documentElement.dataset.palette = palette;
 
 document.documentElement.style.setProperty('--ts', String(dens.ts));
 document.documentElement.style.setProperty('--wrap', `${dens.base}px`);
-// Ширину мерим со снятым zoom: часть движков отдаёт размеры окна уже «в зуме», и масштаб начинает гулять.
+// Масштаб. На iPhone страницу уменьшает сам iOS (viewport width=base, см. index.html) — zoom там не нужен.
+// Иначе — CSS zoom; ширину мерим со снятым zoom, чтобы масштаб не «гулял».
 const fit = () => {
   const root = document.documentElement;
   root.style.zoom = '1';
   const w = root.clientWidth || window.innerWidth, h = window.innerHeight;
+  if (root.dataset.vp === 'native' && w >= dens.base - 2) return; // iOS уже вписал страницу в экран
   root.style.zoom = String(w < dens.base ? w / dens.base : Math.min(1, h / (dens.base * 16 / 9)));
 };
 fit();

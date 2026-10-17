@@ -45,7 +45,7 @@ html[data-palette="milk"] { --bg: #f6d9da; --bg-dot: #fbe3e4; }  /* oklch(.91 .0
 html[data-palette="mint"] { --bg: #cde9df; --bg-dot: #d9f0e7; }  /* oklch(.91 .032 172) мятное */
 html[data-palette="candy"] { --bg: var(--cozy-scene-candy); --bg-dot: var(--cozy-scene-candy-dot); }  /* было */
 
-html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+html { background: var(--bg); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { margin: 0; overscroll-behavior-y: none; }
 button { font: inherit; color: inherit; }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }

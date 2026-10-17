@@ -6,6 +6,20 @@
 <meta name="theme-color" content="#e4ddf4">
 <title>Тренер Лизи</title>
 <script src="https://telegram.org/js/telegram-web-app.js?59"></script>
+<script>
+// iPhone/iPad: страницу уменьшает сам iOS через viewport, без CSS zoom — в iOS-движке zoom
+// не действует на размеры шрифта, заданные через calc(), и текст оставался огромным.
+// Базы должны совпадать с src/density.ts.
+(function () {
+  var ua = navigator.userAgent, tg = window.Telegram && window.Telegram.WebApp;
+  var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) || (tg && tg.platform === 'ios');
+  if (!ios) return;
+  var base = { cozy: 720, medium: 840, compact: 960 }[new URLSearchParams(location.search).get('density')] || 840;
+  if (Math.min(screen.width, screen.height) >= base) return;
+  document.querySelector('meta[name=viewport]').setAttribute('content', 'width=' + base + ', user-scalable=no, viewport-fit=cover');
+  document.documentElement.setAttribute('data-vp', 'native');
+})();
+</script>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
