@@ -14,7 +14,9 @@
   var ua = navigator.userAgent, tg = window.Telegram && window.Telegram.WebApp;
   var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) || (tg && tg.platform === 'ios');
   if (!ios) return;
-  var base = { cozy: 720, medium: 840, compact: 960 }[new URLSearchParams(location.search).get('density')] || 840;
+  var sizes = { small: 840, medium: 720, large: 620 }, key = new URLSearchParams(location.search).get('density');
+  if (!sizes[key]) { try { key = localStorage.getItem('trainer_kawaii_size'); } catch (e) { key = null; } }
+  var base = sizes[key] || 720;
   if (Math.min(screen.width, screen.height) >= base) return;
   document.querySelector('meta[name=viewport]').setAttribute('content', 'width=' + base + ', user-scalable=no, viewport-fit=cover');
   document.documentElement.setAttribute('data-vp', 'native');

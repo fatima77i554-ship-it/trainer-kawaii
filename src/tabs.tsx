@@ -6,6 +6,7 @@ import {
   pad, paymentsOn, rangeLabel, rub, sessionStatus, short, sortedClients, startOf, subOf, today0, TYPE_LOOKS, TYPES, WD, whoOf,
   type Session, type TypeKey,
 } from './data';
+import { DENSITY, densKey, setDensity } from './density';
 import { clearSaved, save } from './persist';
 import { hap, me, push, refresh, state, toast, type Settings } from './store';
 import { Avatar, Empty, MeAvatar, Note, SecTitle, Sheet, Tag, trainerFullName, trainerName, TypeBadge } from './ui';
@@ -223,6 +224,14 @@ export function SettingsTab() {
           <div><div className="me__name">{trainerFullName() || 'Тренер'}</div><div className="me__sub">{me()?.username ? `@${me()!.username} · ` : ''}бот @{CONFIG.botUsername}</div></div>
         </div>
       </Sheet>
+
+      <SecTitle>Размер интерфейса</SecTitle>
+      <div className="seg">
+        {Object.entries(DENSITY).map(([k, d]) => (
+          <Button key={k} color={k === densKey ? 'pink' : 'white'} size="sm" shape="square"
+            onClick={() => { if (k !== densKey) { hap('select'); setDensity(k); } }}>{d.label}</Button>
+        ))}
+      </div>
 
       <SecTitle>Бот напомнит клиентам</SecTitle>
       <Sheet>

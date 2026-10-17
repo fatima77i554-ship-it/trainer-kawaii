@@ -176,14 +176,14 @@ export function Mo({ children, block, className, style, ...opts }: MoOptions & {
 /** Кнопки кита на размер крупнее, если плотность мельче родной базы кита (иначе ~26 pt — неудобно пальцу). */
 const UP: Record<string, 'sm' | 'md' | 'lg'> = { sm: 'md', md: 'lg', lg: 'lg' };
 export function Button(p: ButtonProps) {
-  const size = kitShrink > 1.1 ? UP[p.size ?? 'md'] : p.size;
+  const size = kitShrink >= 1 ? UP[p.size ?? 'md'] : p.size; // при мелких размерах — на ступень крупнее, чтобы попадать пальцем
   return <Mo press="push" block={p.fullWidth}><KitButton {...p} size={size} /></Mo>;
 }
 export function IconButton({ attention, ...p }: IconButtonProps & { attention?: boolean }) {
   return <Mo press="push" attention={attention}><KitIconButton {...p} /></Mo>;
 }
 export function Toggle(p: ToggleProps) {
-  return <Mo press="squish"><KitToggle {...p} height={Math.round((p.height ?? 44) * kitShrink)} /></Mo>;
+  return <Mo press="squish"><KitToggle {...p} height={Math.round((p.height ?? 44) * Math.max(1.15, kitShrink))} /></Mo>;
 }
 export function Arrow({ className, style, ...p }: ArrowProps) {
   return <Mo press={p.direction === 'left' ? 'nudge-left' : 'nudge-right'} className={className} style={style}><KitArrow {...p} /></Mo>;
