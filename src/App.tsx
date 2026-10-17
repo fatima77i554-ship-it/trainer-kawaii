@@ -107,12 +107,12 @@ export function App() {
       <main className={`wrap ${live.length ? 'under' : ''}`} key={state.tab}>{view}</main>
 
       {state.tab === 'sched' && (
-        <div className="fab">
+        <div className="fab"><div className="fab__in">
           <Mo enter="slap" delay={200}>
             {/* «внимание» — единственное на экране: «+» мягко дышит, только когда день пустой */}
             <IconButton icon="plus" label="Добавить тренировку" color="pink" shape="round" size={104} attention={!day(state.sel).length && !live.length} onClick={() => newSession()} />
           </Mo>
-        </div>
+        </div></div>
       )}
 
       <nav className="tabs">

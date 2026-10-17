@@ -11,13 +11,17 @@ import { inTG, pop, tg } from './store';
 const palette = new URLSearchParams(location.search).get('palette');
 if (palette) document.documentElement.dataset.palette = palette;
 
-// Интерфейс нарисован под ширину 600px и масштабируется под экран телефона.
-const BASE = 600;
-// На телефоне — по ширине; на широком экране (превью на компьютере) — чтобы влезала высота.
+// Интерфейс нарисован под ширину 720px (база кита) и масштабируется под экран через zoom.
+// Ширину мерим со снятым zoom: часть движков отдаёт размеры окна уже «в зуме», и масштаб начинает гулять.
+const BASE = 720;
+let curZoom = 0;
 const fit = () => {
-  const w = window.innerWidth, h = window.innerHeight;
-  const z = w < BASE ? w / BASE : Math.min(1, h / 1050);
-  document.documentElement.style.setProperty('--zoom', String(z));
+  const root = document.documentElement;
+  root.style.zoom = '1';
+  const w = root.clientWidth || window.innerWidth, h = window.innerHeight;
+  const z = w < BASE ? w / BASE : Math.min(1, h / 1280);
+  root.style.zoom = String(z);
+  if (Math.abs(z - curZoom) > 0.001) curZoom = z;
 };
 fit();
 addEventListener('resize', fit);
@@ -32,6 +36,7 @@ if (inTG) {
   try { tg.setHeaderColor(bg); tg.setBackgroundColor(bg); } catch { /* */ }
   try { if (tg.isVersionAtLeast('7.10')) tg.setBottomBarColor(paper); } catch { /* */ }
   try { tg.BackButton.onClick(pop); } catch { /* */ }
+  try { tg.onEvent('viewportChanged', fit); } catch { /* */ }
 }
 
 loadSaved();
