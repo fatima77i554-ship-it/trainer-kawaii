@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "typeRoots": ["./node_modules/@types"],
+    "baseUrl": ".",
+    "paths": {
+      "cozy-ui-kit": ["../cozy-ui-kit/src/index.ts"],
+      "cozy-ui-kit-assets": ["../cozy-ui-kit/src/assets.ts"],
+      "cozy-motion": ["../cozy-ui-kit/motion/cozy-motion.ts"],
+      "cozy-motion-spec": ["../cozy-ui-kit/motion/motion.json"],
+      "react": ["./node_modules/@types/react"],
+      "react/*": ["./node_modules/@types/react/*"]
+    }
+  },
+  "include": ["src", "../cozy-ui-kit/src/png.d.ts", "src/css.d.ts"]
+}
