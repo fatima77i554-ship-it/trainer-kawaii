@@ -16,7 +16,7 @@
   if (!ios) return;
   var sizes = { small: 840, medium: 720, large: 620 }, key = new URLSearchParams(location.search).get('density');
   if (!sizes[key]) { try { key = localStorage.getItem('trainer_kawaii_size'); } catch (e) { key = null; } }
-  var base = sizes[key] || 720;
+  var base = sizes[key] || 620;
   if (Math.min(screen.width, screen.height) >= base) return;
   document.querySelector('meta[name=viewport]').setAttribute('content', 'width=' + base + ', user-scalable=no, viewport-fit=cover');
   document.documentElement.setAttribute('data-vp', 'native');

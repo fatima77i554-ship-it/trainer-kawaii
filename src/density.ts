@@ -8,7 +8,7 @@ export const DENSITY: Record<string, { base: number; ts: number; label: string }
 };
 export const SIZE_KEY = 'trainer_kawaii_size';
 const saved = (() => { try { return localStorage.getItem(SIZE_KEY); } catch { return null; } })();
-export const densKey = [new URLSearchParams(location.search).get('density'), saved].find(k => k && DENSITY[k]) ?? 'medium';
+export const densKey = [new URLSearchParams(location.search).get('density'), saved].find(k => k && DENSITY[k]) ?? 'large'; // по умолчанию «Крупнее» — выбрано 17.10.2026
 export const dens = DENSITY[densKey];
 /** Во сколько раз спрайты кита мельче, чем в его родной базе 720px. */
 export const kitShrink = dens.base / 720;
