@@ -9,6 +9,7 @@ import { buttonPressDepth, buttonPressedSprites, buttonSprites, iconSprites } fr
 import { Motion, type Handle, type Layer, type MotionSpec, type Preset } from 'cozy-motion';
 import spec from 'cozy-motion-spec';
 import { useEffect, useLayoutEffect, useRef, type CSSProperties, type ReactNode } from 'react';
+import { kitShrink } from './density';
 import { hap, state } from './store';
 
 export const motion = new Motion(spec as unknown as MotionSpec, {
@@ -172,14 +173,17 @@ export function Mo({ children, block, className, style, ...opts }: MoOptions & {
 }
 
 /* ===== Кнопки кита с нажатием из motion-кита ===== */
+/** Кнопки кита на размер крупнее, если плотность мельче родной базы кита (иначе ~26 pt — неудобно пальцу). */
+const UP: Record<string, 'sm' | 'md' | 'lg'> = { sm: 'md', md: 'lg', lg: 'lg' };
 export function Button(p: ButtonProps) {
-  return <Mo press="push" block={p.fullWidth}><KitButton {...p} /></Mo>;
+  const size = kitShrink > 1.1 ? UP[p.size ?? 'md'] : p.size;
+  return <Mo press="push" block={p.fullWidth}><KitButton {...p} size={size} /></Mo>;
 }
 export function IconButton({ attention, ...p }: IconButtonProps & { attention?: boolean }) {
   return <Mo press="push" attention={attention}><KitIconButton {...p} /></Mo>;
 }
 export function Toggle(p: ToggleProps) {
-  return <Mo press="squish"><KitToggle {...p} /></Mo>;
+  return <Mo press="squish"><KitToggle {...p} height={Math.round((p.height ?? 44) * kitShrink)} /></Mo>;
 }
 export function Arrow({ className, style, ...p }: ArrowProps) {
   return <Mo press={p.direction === 'left' ? 'nudge-left' : 'nudge-right'} className={className} style={style}><KitArrow {...p} /></Mo>;

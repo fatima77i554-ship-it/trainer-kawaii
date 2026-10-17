@@ -5,23 +5,21 @@ import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { seedDemo } from './data';
 import { loadSaved } from './persist';
+import { dens } from './density';
 import { inTG, pop, tg } from './store';
 
 // Палитра фона: ?palette=milk | mint | lavender (по умолчанию) | candy (старая) — для сравнения на телефоне.
 const palette = new URLSearchParams(location.search).get('palette');
 if (palette) document.documentElement.dataset.palette = palette;
 
-// Интерфейс нарисован под ширину 720px (база кита) и масштабируется под экран через zoom.
+document.documentElement.style.setProperty('--ts', String(dens.ts));
+document.documentElement.style.setProperty('--wrap', `${dens.base}px`);
 // Ширину мерим со снятым zoom: часть движков отдаёт размеры окна уже «в зуме», и масштаб начинает гулять.
-const BASE = 720;
-let curZoom = 0;
 const fit = () => {
   const root = document.documentElement;
   root.style.zoom = '1';
   const w = root.clientWidth || window.innerWidth, h = window.innerHeight;
-  const z = w < BASE ? w / BASE : Math.min(1, h / 1280);
-  root.style.zoom = String(z);
-  if (Math.abs(z - curZoom) > 0.001) curZoom = z;
+  root.style.zoom = String(w < dens.base ? w / dens.base : Math.min(1, h / (dens.base * 16 / 9)));
 };
 fit();
 addEventListener('resize', fit);
