@@ -27,11 +27,11 @@ npm run dev            # → http://localhost:5174 с пересборкой
 Демо-время можно не подменять: данные строятся от текущей даты.
 
 ## Публикация
-Адрес: **https://fatima77i554-ship-it.github.io/trainer-kawaii/** (GitHub Pages → ветка `main`, папка `/docs`).
+Бот @Lizzi_trainer_bot открывает **https://fatima77i554-ship-it.github.io/trainer-miniapp/** — сборка `docs/`
+этого проекта лежит в корне репозитория `trainer-miniapp` (первая версия прототипа — там же в `v1/`).
+Обновить бота: `npm run build` → скопировать содержимое `docs/` в корень `trainer-miniapp` → commit → push.
 
-Подключить к боту — в @BotFather:
-1. `/mybots` → @Lizzi_trainer_bot → **Bot Settings** → **Menu Button** → **Edit menu button URL** → вставить адрес выше.
-2. Если у бота настроено главное мини-приложение: **Bot Settings** → **Configure Mini App** → **Edit Mini App URL** → тот же адрес.
+Копия для просмотра без бота — GitHub Pages этого репозитория: https://fatima77i554-ship-it.github.io/trainer-kawaii/
 
 Сборка для публикации (`npm run build`) кладёт в `docs/assets` только спрайты из `tools/used-assets.txt`
 и сжимает PNG (`tools/optimize_assets.py`). Добавили экран с новыми картинками — допишите их в список.
